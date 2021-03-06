@@ -2,22 +2,22 @@ import Head from 'next/head';
 import Snippet from '../components/Snippet';
 import useSWR from 'swr';
 import Link from 'next/link';
+
 export default function Home() {
-    //TODO: use swr to retrieve snippets
-    const snippets = [];
+    const { data: snippets = [], mutate } = useSWR('/api/snippets')
     return (
         <div>
             <Head>
-                <title>Create Next App</title>
+                <title>Nextjs App</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
             <main className="">
                 <div className="my-12">
-                    <h1 className="text-red-100 text-2xl">
-                        Errday Code Snippets
+                    <h1 className="text-white text-2xl">
+                        Code Snippet App
                     </h1>
-                    <p className="text-red-200">
+                    <p className="text-white">
                         Create and browse snippets you use every day in Web
                         Development!
                     </p>
@@ -27,14 +27,15 @@ export default function Home() {
                         </a>
                     </Link>
                 </div>
-                {snippets &&
-                    snippets.map((snippet) => (
-                        <Snippet
-                            key={snippet.id}
-                            snippet={snippet}
-                            snippetDeleted={mutate}
-                        />
-                    ))}
+                { snippets &&
+                  snippets.map((snippet) => (
+                    <Snippet
+                        key={snippet.id}
+                        snippet={snippet}
+                        snippetDeleted={mutate}
+                    />
+                  ))
+                }
             </main>
         </div>
     );

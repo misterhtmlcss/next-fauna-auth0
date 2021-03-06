@@ -1,6 +1,8 @@
 import Head from 'next/head';
 import { getSnippetById } from '../../utils/Fauna';
 import SnippetForm from '../../components/SnippetForm';
+import next from 'next';
+import { getRedirectStatus } from 'next/dist/lib/load-custom-routes';
 
 export default function Home({ snippet }) {
     return (
@@ -19,11 +21,17 @@ export default function Home({ snippet }) {
 }
 
 export async function getServerSideProps(context) {
+
     try {
-        //TODO: Get and return snippet as prop
-        return {
-            props: {},
-        };
+      const id = context.params.id
+
+      const snippet  = await getSnippetById(id)
+
+      return {
+          props: {
+            snippet
+          }
+      }
     } catch (error) {
         console.error(error);
         context.res.statusCode = 302;

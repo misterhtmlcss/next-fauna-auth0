@@ -5,7 +5,11 @@
     "scripts": {
         "dev": "next dev",
         "build": "next build",
-        "start": "next start"
+        "start": "next start",
+        "lint": "eslint --ignore-path .gitignore --ext .js .",
+        "prettier": "prettier --ignore-path .gitignore --write \"**/*.+(js)\"",
+        "check-format": "npm run prettier -- --list-different",
+        "validate": "concurrently \"npm run check-format\" \"npm run lint\""
     },
     "dependencies": {
         "faunadb": "^3.0.1",
@@ -18,6 +22,18 @@
     "devDependencies": {
         "@fullhuman/postcss-purgecss": "^3.0.0",
         "postcss-preset-env": "^6.7.0",
-        "tailwindcss": "^1.9.6"
+        "tailwindcss": "^1.9.6",
+        "husky": "^4.3.8",
+        "lint-staged": "^10.5.4",
+        "prettier": "^2.2.1"
+    },
+    "husky": {
+      "hooks": {
+        "pre-commit": "npm run prettier && lint-staged"
+      }
+    },
+    "lint-staged": {
+      "*.js": "eslint --cache --fix",
+      "*.{js,css,md}": "prettier --write"
     }
 }
