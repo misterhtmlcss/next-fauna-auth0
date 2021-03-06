@@ -1,39 +1,52 @@
 {
-    "name": "nextjs-crash-course-fauna-swr-react-hook-form",
-    "version": "0.1.0",
-    "private": true,
-    "scripts": {
-        "dev": "next dev",
-        "build": "next build",
-        "start": "next start",
-        "lint": "eslint --ignore-path .gitignore --ext .js .",
-        "prettier": "prettier --ignore-path .gitignore --write \"**/*.+(js)\"",
-        "check-format": "npm run prettier -- --list-different",
-        "validate": "concurrently \"npm run check-format\" \"npm run lint\""
-    },
-    "dependencies": {
-        "faunadb": "^3.0.1",
-        "next": "9.5.5",
-        "react": "16.14.0",
-        "react-dom": "16.14.0",
-        "react-hook-form": "^6.10.1",
-        "swr": "^0.3.8"
-    },
-    "devDependencies": {
-        "@fullhuman/postcss-purgecss": "^3.0.0",
-        "postcss-preset-env": "^6.7.0",
-        "tailwindcss": "^1.9.6",
-        "husky": "^4.3.8",
-        "lint-staged": "^10.5.4",
-        "prettier": "^2.2.1"
-    },
-    "husky": {
-      "hooks": {
-        "pre-commit": "npm run prettier && lint-staged"
-      }
-    },
-    "lint-staged": {
-      "*.js": "eslint --cache --fix",
-      "*.{js,css,md}": "prettier --write"
+  "name": "nextjs-crash-course-fauna-swr-react-hook-form",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint:fix": "eslint . --fix",
+    "lint": "eslint --ignore-path .gitignore --ext .js .",
+    "prettier": "prettier --ignore-path .gitignore --write \"**/*.+(js)\"",
+    "check-format": "npm run prettier -- --list-different",
+    "validate": "concurrently \"npm run check-format\" \"npm run lint\""
+  },
+  "dependencies": {
+    "faunadb": "^3.0.1",
+    "next": "9.5.5",
+    "react": "16.14.0",
+    "react-dom": "16.14.0",
+    "react-hook-form": "^6.10.1",
+    "swr": "^0.3.11"
+  },
+  "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^3.1.3",
+    "babel-eslint": "^9.0.0",
+    "concurrently": "^6.0.0",
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb": "^18.0.0",
+    "eslint-config-nextjs": "1.0.7",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-html": "^5.0.3",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-react": "^7.14.2",
+    "eslint-plugin-react-hooks": "^1.4.0",
+    "husky": "^4.3.8",
+    "lint-staged": "^10.5.4",
+    "postcss-preset-env": "^6.7.0",
+    "prettier": "^1.16.4",
+    "tailwindcss": "^1.9.6"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run prettier && lint-staged"
     }
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix",
+    "*.{js,css,md}": "prettier --write"
+  }
 }
