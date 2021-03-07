@@ -3,16 +3,16 @@ import Link from 'next/link';
 import Code from './Code';
 
 export default function Snippet({ snippet, snippetDeleted }) {
-  const { data, id } = snippet
-  const { name, language, description, code } = data
+  const { data, id } = snippet;
+  const { name, language, description, code } = data;
   const deleteSnippet = async () => {
     try {
       await fetch('/api/deleteSnippet', {
         method: 'DELETE',
         body: JSON.stringify({ id: snippet.id }),
         headers: {
-          'Content-Type': 'application/json',
-        },
+          'Content-Type': 'application/json'
+        }
       });
       snippetDeleted();
     } catch (err) {

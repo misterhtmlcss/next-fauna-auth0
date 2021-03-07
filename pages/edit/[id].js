@@ -26,8 +26,8 @@ export async function getServerSideProps(context) {
 
     return {
       props: {
-        snippet,
-      },
+        snippet
+      }
     };
   } catch (error) {
     // eslint-disable-next-line no-console

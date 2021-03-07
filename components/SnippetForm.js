@@ -10,8 +10,8 @@ export default function SnippetForm({ snippet }) {
       name: snippet ? snippet.data.name : '',
       language: snippet ? snippet.data.language : 'JavaScript',
       description: snippet ? snippet.data.description : '',
-      code: snippet ? snippet.data.code : '',
-    },
+      code: snippet ? snippet.data.code : ''
+    }
   });
 
   const createSnippet = async ({ name, language, description, code }) => {
@@ -20,8 +20,8 @@ export default function SnippetForm({ snippet }) {
         method: 'POST',
         body: JSON.stringify({ name, language, description, code }),
         headers: {
-          'Content-Type': 'application/json',
-        },
+          'Content-Type': 'application/json'
+        }
       });
       router.push('/');
     } catch (err) {
@@ -36,8 +36,8 @@ export default function SnippetForm({ snippet }) {
         method: 'PUT',
         body: JSON.stringify({ id, name, language, description, code }),
         headers: {
-          'Content-Type': 'application/json',
-        },
+          'Content-Type': 'application/json'
+        }
       });
       router.push('/');
     } catch (err) {
