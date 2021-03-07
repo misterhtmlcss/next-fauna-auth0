@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>Nextjs App</title>
+        <title>MHC Nextjs App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
