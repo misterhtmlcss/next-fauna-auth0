@@ -26,14 +26,14 @@ export async function getServerSideProps(context) {
 
     return {
       props: {
-        snippet
-      }
+        snippet,
+      },
     };
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(error);
     context.res.statusCode = 302;
-    context.res.setHeader('Location', `/`);
+    context.res.setHeader('Location', '/');
     return { props: {} };
   }
 }

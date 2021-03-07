@@ -9,8 +9,8 @@ export default function Snippet({ snippet, snippetDeleted }) {
         method: 'DELETE',
         body: JSON.stringify({ id: snippet.id }),
         headers: {
-          'Content-Type': 'application/json'
-        }
+          'Content-Type': 'application/json',
+        },
       });
       snippetDeleted();
     } catch (err) {

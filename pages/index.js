@@ -25,7 +25,7 @@ export default function Home() {
           </Link>
         </div>
         {snippets &&
-          snippets.map(snippet => (
+          snippets.map((snippet) => (
             <Snippet
               key={snippet.id}
               snippet={snippet}
