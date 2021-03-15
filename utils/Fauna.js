@@ -1,92 +1,88 @@
-const faunadb = require('faunadb');
+import faunadb from 'faunadb';
+
 const faunaClient = new faunadb.Client({ secret: process.env.FAUNA_SECRET });
 const q = faunadb.query;
 
 const getSnippets = async () => {
-    const { data } = await faunaClient.query(
-        q.Map(
-            q.Paginate(q.Documents(q.Collection('snippets'))),
-            q.Lambda('ref', q.Get(q.Var('ref')))
-        )
+  try {
+    const { data: snippets } = await faunaClient.query(
+      q.Map(
+        q.Paginate(q.Documents(q.Collection('snippets'))),
+        q.Lambda('ref', q.Get(q.Var('ref')))
+      )
     );
-    const snippets = data.map((snippet) => {
-        snippet.id = snippet.ref.id;
-        delete snippet.ref;
-        return snippet;
+
+    return snippets.map(snippet => {
+      snippet.id = snippet.ref.id;
+      delete snippet.ref;
+      return snippet;
     });
-
-    return snippets;
+  } catch (err) {
+    throw new Error(`Fauna SDK - attempt to get snippets failed: ${err}`);
+  }
 };
 
-const getSnippetById = async (id) => {
-    const snippet = await faunaClient.query(
-        q.Get(q.Ref(q.Collection('snippets'), id))
+const getSnippetById = async id => {
+  try {
+    const response = await faunaClient.query(
+      q.Get(q.Ref(q.Collection('snippets'), id))
     );
-    snippet.id = snippet.ref.id;
-    delete snippet.ref;
-    return snippet;
+
+    response.id = response.ref.id;
+    delete response.ref;
+    return response;
+  } catch (err) {
+    throw new Error(`Fauna SDK - attempt to get snippet by ID failed: ${err}`);
+  }
 };
 
-const getSnippetsByUser = async (userId) => {
-    const { data } = await faunaClient.query(
-        q.Map(
-            q.Paginate(q.Match(q.Index('snippets_by_user'), userId)),
-            q.Lambda('ref', q.Get(q.Var('ref')))
-        )
+const createSnippet = async (code, language, description, name, userID) => {
+  try {
+    const response = await faunaClient.query(
+      q.Create(q.Collection('snippets'), {
+        data: {
+          name,
+          description,
+          language,
+          code,
+          userID
+        }
+      })
     );
-    const snippets = data.map((snippet) => {
-        snippet.id = snippet.ref.id;
-        delete snippet.ref;
-        return snippet;
-    });
-
-    return snippets;
+    return response;
+  } catch (err) {
+    throw new Error(`Fauna SDK - attempt to create snippet failed: ${err}`);
+  }
 };
 
-const getSnippetsByLanguage = async (language) => {
-    const { data } = await faunaClient.query(
-        q.Map(
-            q.Paginate(q.Match(q.Index('snippets_by_language'), language)),
-            q.Lambda('ref', q.Get(q.Var('ref')))
-        )
+const updateSnippet = async (id, code, language, name, description) => {
+  try {
+    const response = await faunaClient.query(
+      q.Update(q.Ref(q.Collection('snippets'), id), {
+        data: { code, language, name, description }
+      })
     );
-    const snippets = data.map((snippet) => {
-        snippet.id = snippet.ref.id;
-        delete snippet.ref;
-        return snippet;
-    });
-
-    return snippets;
+    return response;
+  } catch (err) {
+    throw new Error(`Fauna SDK - attempt to update snippet failed: ${err}`);
+  }
 };
 
-const createSnippet = async (code, language, description, name, userId) => {
-    return await faunaClient.query(
-        q.Create(q.Collection('snippets'), {
-            data: { code, language, description, name, userId },
-        })
+const deleteSnippet = async id => {
+  try {
+    const response = await faunaClient.query(
+      q.Delete(q.Ref(q.Collection('snippets'), id))
     );
+    return response;
+  } catch (err) {
+    throw new Error(`Fauna SDK - attempt to delete snippet failed: ${err}`);
+  }
 };
 
-const updateSnippet = async (id, code, language, name, description, userId) => {
-    return await faunaClient.query(
-        q.Update(q.Ref(q.Collection('snippets'), id), {
-            data: { code, language, name, description, userId },
-        })
-    );
-};
-
-const deleteSnippet = async (id) => {
-    return await faunaClient.query(
-        q.Delete(q.Ref(q.Collection('snippets'), id))
-    );
-};
-
-module.exports = {
-    createSnippet,
-    getSnippets,
-    getSnippetById,
-    getSnippetsByUser,
-    updateSnippet,
-    deleteSnippet,
-    getSnippetsByLanguage,
+export {
+  createSnippet,
+  getSnippets,
+  getSnippetById,
+  updateSnippet,
+  deleteSnippet
 };
