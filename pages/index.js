@@ -17,7 +17,7 @@ export default function Home() {
       <main className="">
         <div className="my-12">
           <Header
-            title="!Code Snippet App"
+            title="Code Snippet App"
             subtitle="Create and browse snippets you use every day in Web Development!"
           />
         </div>

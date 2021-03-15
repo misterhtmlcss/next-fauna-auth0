@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { getSnippetById } from '../../utils/Fauna';
 import SnippetForm from '../../components/SnippetForm';
 
@@ -18,22 +19,24 @@ export default function Home({ snippet }) {
   );
 }
 
-export async function getServerSideProps(context) {
-  try {
-    const { id } = context.params;
+export const getServerSideProps = withPageAuthRequired({
+  async getServerSideProps(context) {
+    try {
+      const { id } = context.params;
 
-    const snippet = await getSnippetById(id);
+      const snippet = await getSnippetById(id);
 
-    return {
-      props: {
-        snippet
-      }
-    };
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error(error);
-    context.res.statusCode = 302;
-    context.res.setHeader('Location', '/');
-    return { props: {} };
+      return {
+        props: {
+          snippet
+        }
+      };
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error);
+      context.res.statusCode = 302;
+      context.res.setHeader('Location', '/');
+      return { props: {} };
+    }
   }
-}
+});

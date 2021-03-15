@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-import { withPageAuthRequired } from '@auth0/nextjs-auth0';
+// import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 
 export default function SnippetForm({ snippet }) {
   const router = useRouter();
@@ -148,4 +148,4 @@ export default function SnippetForm({ snippet }) {
   );
 }
 
-export const getServerSideProps = withPageAuthRequired();
+// export const getServerSideProps = withPageAuthRequired();

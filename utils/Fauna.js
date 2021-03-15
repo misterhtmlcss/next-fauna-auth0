@@ -36,7 +36,7 @@ const getSnippetById = async id => {
   }
 };
 
-const createSnippet = async (code, language, description, name) => {
+const createSnippet = async (code, language, description, name, userID) => {
   try {
     const response = await faunaClient.query(
       q.Create(q.Collection('snippets'), {
@@ -44,7 +44,8 @@ const createSnippet = async (code, language, description, name) => {
           name,
           description,
           language,
-          code
+          code,
+          userID
         }
       })
     );
