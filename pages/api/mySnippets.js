@@ -10,8 +10,7 @@ export default withApiAuthRequired(async function handler(req, res) {
   try {
     const snippets = await getSnippetsByUser(session.user.sub);
     return res.status(200).json(snippets);
-  }
-  catch (err) {
+  } catch (err) {
     console.error(err);
     return res.status(500).json({ msg: 'Something went wrong.' });
   }
