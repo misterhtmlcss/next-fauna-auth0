@@ -1,39 +1,42 @@
-import { useUser } from '@auth0/nextjs-auth0';
-import React from 'react';
 import Link from 'next/link';
+import { useUser } from '@auth0/nextjs-auth0';
+
 export default function Navbar() {
-  const { user, isLoading } = useUser();
+  const { user, error, isLoading } = useUser();
+  if (error) return <div>{error.message}</div>;
   return (
     <nav>
       <Link href="/">
-        <a className="text-2xl mb-2 block text-center text-red-200 uppercase">
-          Errday Snippets
+        <a className="text-2xl mb-2 block text-center text-indigo-100 uppercase">
+          Roger's code snippets
         </a>
       </Link>
-      <div className="space-x-3 m-x-auto mb-6 flex justify-center">
+      <div className="flex space-x-3 justify-center mb-6 m-x-auto">
         <Link href="/snippets/html">
-          <a className="text-red-100 hover:underline">HTML</a>
+          <a className="hover:underline text-gray-100">HTML</a>
         </Link>
         <Link href="/snippets/css">
-          <a className="text-red-100 hover:underline">CSS</a>
+          <a className="hover:underline text-gray-100">CSS</a>
         </Link>
         <Link href="/snippets/javascript">
-          <a className="text-red-100 hover:underline">JavaScript</a>
+          <a className="hover:underline text-gray-100">JavaScript</a>
         </Link>
-        {!isLoading && !user && (
+        {!isLoading && !user ? (
           <Link href="/api/auth/login">
-            <a className="text-red-100 hover:underline">Login</a>
+            <a className="hover:underline text-green-200">Login</a>
           </Link>
-        )}
-        {!isLoading && user && (
-          <>
-            <Link href="/mySnippets">
-              <a className="text-red-100 hover:underline">My Snippets</a>
-            </Link>
-            <Link href="/api/auth/logout">
-              <a className="text-red-100 hover:underline">Logout</a>
-            </Link>
-          </>
+        ) : (
+          !isLoading &&
+          user && (
+            <>
+              <Link href="/api/mysnippets">
+                <a className="hover:underline text-gray-100">MySnippets</a>
+              </Link>
+              <Link href="/api/auth/logout">
+                <a className="hover:underline text-green-200">Logout</a>
+              </Link>
+            </>
+          )
         )}
       </div>
     </nav>
