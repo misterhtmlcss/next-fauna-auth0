@@ -3,9 +3,7 @@ import { useUser } from '@auth0/nextjs-auth0';
 
 export default function Navbar() {
   const { user, error, isLoading } = useUser();
-
   if (error) return <div>{error.message}</div>;
-
   return (
     <nav>
       <Link href="/">
