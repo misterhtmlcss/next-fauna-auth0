@@ -3,19 +3,33 @@ import { withApiAuthRequired, getSession } from '@auth0/nextjs-auth0';
 
 export default withApiAuthRequired(async function handler(req, res) {
   // TODO: Need to deal with userID; only correct user can update their snippet
-  // const { user } = getSession(req, res);
+  const session = getSession(req, res);
+  const userID = session.user.sub;
+
   if (req.method !== 'PUT') {
     return res.status(405).json({ msg: 'Method not allowed' });
   }
-  const { id, code, language, description, name } = req.body;
+
+  const { id, name, language, description, code } = req.body;
+  console.log('-----updatedSnippet------');
+  console.log('req.body', req.body);
+  console.log(
+    'id, name, language, description, code, userID',
+    id,
+    name,
+    language,
+    description,
+    code,
+    userID
+  );
 
   try {
     const updatedSnippet = await updateSnippet(
       id,
-      code,
+      name,
       language,
       description,
-      name,
+      code,
       userID
     );
     return res.status(200).json(updatedSnippet);

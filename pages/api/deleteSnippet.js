@@ -1,14 +1,20 @@
-import { deleteSnippet } from '../../utils/Fauna';
+import { deleteSnippet, getSnippetById } from '../../utils/Fauna';
 
 import { withApiAuthRequired, getSession } from '@auth0/nextjs-auth0';
 
 export default withApiAuthRequired(async function handler(req, res) {
   // TODO: Need to deal with userID; only correct user can delete their snippet
-  // const { sub: userID } = getSession(req, res).user;
+  const session = getSession(req, res);
+  const userID = session.user.sub;
+
   const { id } = req.body;
-  if (req.method !== 'DELETE') {
-    return res.status(405).json({ msg: 'Method not allowed' });
-  }
+
+  const existingRecord = await getSnippetById(id);
+
+  if (!existingRecord || existingRecord.data.userID !== userID)
+    if (req.method !== 'DELETE') {
+      return res.status(405).json({ msg: 'Method not allowed' });
+    }
 
   try {
     const snippet = await deleteSnippet(id);

@@ -31,6 +31,13 @@ export default function SnippetForm({ snippet }) {
   };
 
   const updateSnippet = async ({ code, language, description, name }) => {
+    console.log(
+      'updateSnippet Snippet Form Component',
+      name,
+      language,
+      description,
+      code
+    );
     const { id } = snippet;
     try {
       await fetch('/api/updateSnippet', {
@@ -43,6 +50,22 @@ export default function SnippetForm({ snippet }) {
       router.push('/');
     } catch (err) {
       throw new Error(`Component - attempt to update snippet failed: ${err}`);
+    }
+  };
+
+  const deleteSnippet = async () => {
+    const { id } = snippet;
+    try {
+      await fetch('/api/deleteSnippet', {
+        method: 'DELETE',
+        body: JSON.stringify({ id }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      router.push('/');
+    } catch (err) {
+      throw new Error(`Component - attempt to delete snippet failed: ${err}`);
     }
   };
 
@@ -138,6 +161,13 @@ export default function SnippetForm({ snippet }) {
         type="submit"
       >
         Save
+      </button>
+      <button
+        type="button"
+        onClick={deleteSnippet}
+        className="bg-red-800 hover:bg-red-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2"
+      >
+        Delete
       </button>
       <Link href="/">
         <a className="mt-3 inline-block bg-red-800 hover:bg-red-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">

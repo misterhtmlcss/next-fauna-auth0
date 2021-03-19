@@ -1,23 +1,14 @@
 import Link from 'next/link';
+import { useUser } from '@auth0/nextjs-auth0';
 import Code from './Code';
 
 export default function Snippet({ snippet, snippetDeleted }) {
-  const { data, id } = snippet;
+  const { user } = useUser();
+
+  const { data } = snippet;
+
   const { name, language, description, code } = data;
-  const deleteSnippet = async () => {
-    try {
-      await fetch('/api/deleteSnippet', {
-        method: 'DELETE',
-        body: JSON.stringify({ id: snippet.id }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      snippetDeleted();
-    } catch (err) {
-      throw new Error(`Component - attempt to delete snippet failed: ${err}`);
-    }
-  };
+
   return (
     <div className="bg-gray-100 p-4 rounded-md my-2 shadow-lg">
       <div className="flex items-center justify-between mb-2">
@@ -28,16 +19,11 @@ export default function Snippet({ snippet, snippetDeleted }) {
       </div>
       <p className="text-gray-900 mb-4">{description}</p>
       <Code code={code} />
-      <Link href={`/edit/${id}`}>
-        <a className="text-gray-800 mr-2">Edit</a>
-      </Link>
-      <button
-        type="submit"
-        onClick={deleteSnippet}
-        className="text-gray-800 mr-2"
-      >
-        Delete
-      </button>
+      {user && user.sub === data.userID && (
+        <Link href={`/edit/${id}`}>
+          <a className="text-gray-800 mr-2">Edit</a>
+        </Link>
+      )}
     </div>
   );
 }
