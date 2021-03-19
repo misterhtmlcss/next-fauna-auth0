@@ -6,7 +6,7 @@ import Snippet from '../../components/Snippet';
 import Header from '../../components/Header';
 
 export default function html() {
-  const { data: snippets = [], error } = useSWR(
+  const { data: snippets = [], error, mutate  } = useSWR(
     '../api/snippetsByLanguage?language=HTML'
   );
 
@@ -23,7 +23,7 @@ export default function html() {
         <Header title="HTML Snippets" />
         {snippets &&
           snippets.map(snippet => (
-            <Snippet key={snippet.id} snippet={snippet} />
+            <Snippet key={snippet.id} snippet={snippet} snippetDeleted={mutate} />
           ))}
       </main>
     </div>
