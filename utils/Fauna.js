@@ -99,17 +99,11 @@ const createSnippet = async (code, language, description, name, userID) => {
 
 const updateSnippet = async (id, name, language, description, code, userID) => {
   try {
-    const snippet = await faunaClient.query(
+    return await faunaClient.query(
       q.Update(q.Ref(q.Collection('snippets'), id), {
         data: { name, language, description, code, userID }
       })
     );
-<<<<<<< Updated upstream
-    console.log('response', response);
-    return response;
-=======
-    return snippet;
->>>>>>> Stashed changes
   } catch (err) {
     throw new Error(`Fauna SDK - attempt to update snippet failed: ${err}`);
   }
@@ -117,10 +111,9 @@ const updateSnippet = async (id, name, language, description, code, userID) => {
 
 const deleteSnippet = async id => {
   try {
-    const snippet = await faunaClient.query(
+    return await faunaClient.query(
       q.Delete(q.Ref(q.Collection('snippets'), id))
     );
-    return snippet;
   } catch (err) {
     throw new Error(`Fauna SDK - attempt to delete snippet failed: ${err}`);
   }
