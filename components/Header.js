@@ -18,7 +18,7 @@ export default function Header({ title, subtitle }) {
           </Link>
         )) || (
           <Link href="/new">
-            <a className="text mt-3 inline-block bg-red-800 hover:bg-red-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            <a className="text mt-3 inline-block bg-blue-800 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
               Create Snippet!
             </a>
           </Link>

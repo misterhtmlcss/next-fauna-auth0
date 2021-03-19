@@ -1,11 +1,9 @@
+import { withApiAuthRequired, getSession } from '@auth0/nextjs-auth0';
 import { getSnippetsByLanguage } from '../../utils/Fauna';
 
-import { withApiAuthRequired, getSession } from '@auth0/nextjs-auth0';
-
 export default withApiAuthRequired(async function handler(req, res) {
-  getSession(req, res);
-
-  const { language, ...args } = req.body;
+  const session = getSession(req, res);
+  const { language } = req.query;
 
   if (req.method !== 'GET') {
     return res.status(405);
@@ -14,7 +12,6 @@ export default withApiAuthRequired(async function handler(req, res) {
     const snippets = await getSnippetsByLanguage(language);
     return res.status(200).json(snippets);
   } catch (err) {
-    console.error(err);
-    return res.status(500).json({ msg: 'Something went wrong.' });
+    return res.status(500).json({ msg: 'API: Something went wrong.' });
   }
 });

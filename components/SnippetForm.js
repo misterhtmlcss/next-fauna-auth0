@@ -1,11 +1,11 @@
-import { useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useForm } from 'react-hook-form';
 
-// import { withPageAuthRequired } from '@auth0/nextjs-auth0';
+import snippetActions from '../utils/snippetActions';
 
 export default function SnippetForm({ snippet }) {
-  const router = useRouter();
+  const { createSnippet, updateSnippet } = snippetActions(snippet, useRouter);
   const { register, handleSubmit, errors } = useForm({
     defaultValues: {
       name: snippet ? snippet.data.name : '',
@@ -14,60 +14,6 @@ export default function SnippetForm({ snippet }) {
       code: snippet ? snippet.data.code : ''
     }
   });
-
-  const createSnippet = async ({ name, language, description, code }) => {
-    try {
-      await fetch('/api/createSnippet', {
-        method: 'POST',
-        body: JSON.stringify({ name, language, description, code }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      router.push('/');
-    } catch (err) {
-      throw new Error(`Component - attempt to create snippet failed: ${err}`);
-    }
-  };
-
-  const updateSnippet = async ({ code, language, description, name }) => {
-    console.log(
-      'updateSnippet Snippet Form Component',
-      name,
-      language,
-      description,
-      code
-    );
-    const { id } = snippet;
-    try {
-      await fetch('/api/updateSnippet', {
-        method: 'PUT',
-        body: JSON.stringify({ id, name, language, description, code }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      router.push('/');
-    } catch (err) {
-      throw new Error(`Component - attempt to update snippet failed: ${err}`);
-    }
-  };
-
-  const deleteSnippet = async () => {
-    const { id } = snippet;
-    try {
-      await fetch('/api/deleteSnippet', {
-        method: 'DELETE',
-        body: JSON.stringify({ id }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      router.push('/');
-    } catch (err) {
-      throw new Error(`Component - attempt to delete snippet failed: ${err}`);
-    }
-  };
 
   return (
     <form onSubmit={handleSubmit(snippet ? updateSnippet : createSnippet)}>
@@ -161,13 +107,6 @@ export default function SnippetForm({ snippet }) {
         type="submit"
       >
         Save
-      </button>
-      <button
-        type="button"
-        onClick={deleteSnippet}
-        className="bg-red-800 hover:bg-red-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2"
-      >
-        Delete
       </button>
       <Link href="/">
         <a className="mt-3 inline-block bg-red-800 hover:bg-red-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">

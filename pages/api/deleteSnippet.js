@@ -1,6 +1,5 @@
-import { deleteSnippet, getSnippetById } from '../../utils/Fauna';
-
 import { withApiAuthRequired, getSession } from '@auth0/nextjs-auth0';
+import { deleteSnippet, getSnippetById } from '../../utils/Fauna';
 
 export default withApiAuthRequired(async function handler(req, res) {
   // TODO: Need to deal with userID; only correct user can delete their snippet
