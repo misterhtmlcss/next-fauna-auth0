@@ -29,7 +29,7 @@ export default function Navbar() {
           !isLoading &&
           user && (
             <>
-              <Link href="/mySnippets">
+              <Link href="/api/mysnippets">
                 <a className="hover:underline text-gray-100">MySnippets</a>
               </Link>
               <Link href="/api/auth/logout">
