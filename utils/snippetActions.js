@@ -1,4 +1,6 @@
-export default function snippetActions(snippet, useRouter) {
+import { useRouter } from 'next/router';
+
+export default function snippetActions(snippet) {
   const router = useRouter();
 
   const createSnippet = async ({ name, language, description, code }) => {
@@ -32,7 +34,7 @@ export default function snippetActions(snippet, useRouter) {
     }
   };
 
-  const deleteSnippet = async snippetDeleted => {
+  const deleteSnippet = async (snippetDeleted) => {
     const { id } = snippet;
     try {
       await fetch('/api/deleteSnippet', {
@@ -42,7 +44,9 @@ export default function snippetActions(snippet, useRouter) {
           'Content-Type': 'application/json'
         }
       });
-      snippetDeleted();
+      // TODO: router.push is slow. Why?
+      // router.push('/');
+      snippetDeleted()
     } catch (err) {
       throw new Error(`Component - attempt to delete snippet failed: ${err}`);
     }
