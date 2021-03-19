@@ -1,7 +1,10 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useUser } from '@auth0/nextjs-auth0';
+import snippetActions from '../utils/snippetActions';
 
-export default function Code({ snippet, deleteSnippet }) {
+export default function ActionButtons({ snippet, snippetDeleted }) {
+  const { deleteSnippet } = snippetActions(snippet, useRouter);
   const { data, id } = snippet;
   const { user } = useUser();
 

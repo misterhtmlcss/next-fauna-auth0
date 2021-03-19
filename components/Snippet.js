@@ -1,11 +1,10 @@
-import { useRouter } from 'next/router';
-import snippetActions from '../utils/snippetActions';
+
 import ActionButtons from './ActionButtons';
+
 import Code from './Code';
 
 export default function Snippet({ snippet, snippetDeleted }) {
-  const { user } = useUser();
-  const { deleteSnippet } = snippetActions(snippet, useRouter);
+
 
   const { data } = snippet;
 
@@ -24,7 +23,6 @@ export default function Snippet({ snippet, snippetDeleted }) {
         <Code code={code} />
         <ActionButtons
           snippet={snippet}
-          deleteSnippet={deleteSnippet}
           snippetDeleted={snippetDeleted}
         />
       </div>
