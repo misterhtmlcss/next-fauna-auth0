@@ -1,13 +1,18 @@
+_TODO: Github Sign-in still doesn't work. Passwordless does work though._
+
 # Nextjs-Fuana-Auth0 Project - 1
+
 ![Preview](screen-shot.png)
 
 ### Stack
+
 - Nextjs (First time)
 - FaunaDB (First time using FQL)
 - Auth0 (First time)
 - SWR (First time)
 - React Hook Form (First time)
 - TailwindCSS (First time)
+
 ### Copy the `.env.local.example` file to `.env.local` and include your credentials.
 
 - **FAUNA_SECRET**: your fauna token

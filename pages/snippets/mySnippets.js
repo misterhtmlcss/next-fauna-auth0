@@ -6,7 +6,7 @@ import Snippet from '../../components/Snippet';
 import Header from '../../components/Header';
 
 export default function MySnippets() {
-  const { data: snippets = [], error, mutate  } = useSWR('../api/mySnippets');
+  const { data: snippets = [], error, mutate } = useSWR('../api/mySnippets');
 
   if (error) return <div>failed to load</div>;
   if (!snippets) return <div>loading...</div>;
@@ -21,7 +21,11 @@ export default function MySnippets() {
         <Header title="My Snippets" />
         {snippets &&
           snippets.map(snippet => (
-            <Snippet key={snippet.id} snippet={snippet} snippetDeleted={mutate} />
+            <Snippet
+              key={snippet.id}
+              snippet={snippet}
+              snippetDeleted={mutate}
+            />
           ))}
       </main>
     </div>

@@ -10,8 +10,10 @@ export default withApiAuthRequired(async function handler(req, res) {
     return res.status(405).json({ msg: 'Method not allowed' });
   }
 
-  if(!userID) {
-    return res.status(401).json({msg: "Unauthorized to create Snippets, please sign in"})
+  if (!userID) {
+    return res
+      .status(401)
+      .json({ msg: 'Unauthorized to create Snippets, please sign in' });
   }
 
   try {

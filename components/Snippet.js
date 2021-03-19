@@ -1,4 +1,3 @@
-
 import ActionButtons from './ActionButtons';
 
 import Code from './Code';
@@ -19,10 +18,7 @@ export default function Snippet({ snippet, snippetDeleted }) {
       <p className="text-gray-900 mb-4">{description}</p>
       <div className="flex justify-between flex-wrap">
         <Code code={code} />
-        <ActionButtons
-          snippet={snippet}
-          snippetDeleted={snippetDeleted}
-        />
+        <ActionButtons snippet={snippet} snippetDeleted={snippetDeleted} />
       </div>
     </div>
   );

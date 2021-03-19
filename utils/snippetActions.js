@@ -34,7 +34,7 @@ export default function snippetActions(snippet) {
     }
   };
 
-  const deleteSnippet = async (snippetDeleted) => {
+  const deleteSnippet = async snippetDeleted => {
     const { id } = snippet;
     try {
       await fetch('/api/deleteSnippet', {
@@ -46,7 +46,7 @@ export default function snippetActions(snippet) {
       });
       // TODO: router.push is slow. Why?
       // router.push('/');
-      snippetDeleted()
+      snippetDeleted();
     } catch (err) {
       throw new Error(`Component - attempt to delete snippet failed: ${err}`);
     }

@@ -9,7 +9,7 @@ export default withApiAuthRequired(async function handler(req, res) {
 
   const existingRecord = await getSnippetById(id);
 
-  if (!existingRecord || existingRecord.data.userID !== userID){
+  if (!existingRecord || existingRecord.data.userID !== userID) {
     return res.status(401).json({ msg: 'Unauthorized request' });
   }
 
