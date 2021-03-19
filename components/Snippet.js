@@ -4,8 +4,6 @@ import ActionButtons from './ActionButtons';
 import Code from './Code';
 
 export default function Snippet({ snippet, snippetDeleted }) {
-
-
   const { data } = snippet;
 
   const { name, language, description, code } = data;

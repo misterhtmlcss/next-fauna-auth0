@@ -3,7 +3,9 @@ import { useUser } from '@auth0/nextjs-auth0';
 
 export default function Navbar() {
   const { user, error, isLoading } = useUser();
+
   if (error) return <div>{error.message}</div>;
+
   return (
     <nav>
       <Link href="/">
@@ -20,6 +22,9 @@ export default function Navbar() {
         </Link>
         <Link href="/snippets/javascript">
           <a className="hover:underline text-gray-100">JavaScript</a>
+        </Link>
+        <Link href="/">
+          <a className="hover:underline text-gray-100">All</a>
         </Link>
         {!isLoading && !user ? (
           <Link href="/api/auth/login">
