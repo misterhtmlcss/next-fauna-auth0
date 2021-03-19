@@ -1,16 +1,21 @@
 import { withApiAuthRequired, getSession } from '@auth0/nextjs-auth0';
-import { updateSnippet } from '../../utils/Fauna';
+import { updateSnippet, getSnippetById } from '../../utils/Fauna';
 
 export default withApiAuthRequired(async function handler(req, res) {
-  // TODO: Need to deal with userID; only correct user can update their snippet
   const session = getSession(req, res);
   const userID = session.user.sub;
+
+  const { id, name, language, description, code } = req.body;
+
+  const existingRecord = await getSnippetById(id);
+
+  if (!existingRecord || existingRecord.data.userID !== userID){
+    return res.status(401).json({ msg: 'Unauthorized request' });
+  }
 
   if (req.method !== 'PUT') {
     return res.status(405).json({ msg: 'Method not allowed' });
   }
-
-  const { id, name, language, description, code } = req.body;
 
   try {
     const updatedSnippet = await updateSnippet(
@@ -21,6 +26,7 @@ export default withApiAuthRequired(async function handler(req, res) {
       code,
       userID
     );
+    console.log("updatedSnippet", updatedSnippet);
     return res.status(200).json(updatedSnippet);
   } catch (err) {
     return res.status(500).json({ msg: `Something went wrong: ${err}` });
