@@ -14,7 +14,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="">
+      <main>
         <div className="my-12">
           <Header
             title="Code Snippet App"
