@@ -65,6 +65,7 @@ const getSnippetsByLanguage = async lang => {
         q.Lambda('ref', q.Get(q.Var('ref')))
       )
     );
+
     return snippets.map(snippet => {
       snippet.id = snippet.ref.id;
       delete snippet.ref;

@@ -1,5 +1,5 @@
 import ActionButtons from './ActionButtons';
-
+import formatLanguage from '../utils/formatLanguage';
 import Code from './Code';
 
 export default function Snippet({ snippet, snippetDeleted }) {
@@ -12,7 +12,7 @@ export default function Snippet({ snippet, snippetDeleted }) {
       <div className="flex items-center justify-between mb-2">
         <h2 className="text-xl text-gray-800 font-bold">{name}</h2>
         <span className="font-bold text-xs text-blue-800 pl-2 py-1 rounded-lg ">
-          {language}
+          {formatLanguage(language)}
         </span>
       </div>
       <p className="text-gray-900 mb-4">{description}</p>

@@ -50,9 +50,15 @@ export default function SnippetForm({ snippet }) {
           className="w-full border bg-white rounded px-3 py-2 outline-none text-gray-700"
           ref={register({ required: true })}
         >
-          <option className="py-1">JavaScript</option>
-          <option className="py-1">HTML</option>
-          <option className="py-1">CSS</option>
+          <option value="javascript" className="py-1">
+            JavaScript
+          </option>
+          <option value="html" className="py-1">
+            HTML
+          </option>
+          <option value="css" className="py-1">
+            CSS
+          </option>
         </select>
         {errors.language && (
           <p className="font-bold text-yellow-100 pl-3 bg-red-600 rounded">

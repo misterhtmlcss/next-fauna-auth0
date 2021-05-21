@@ -18,7 +18,7 @@ export default function ActionButtons({ snippet, snippetDeleted }) {
           <button
             type="button"
             onClick={() => deleteSnippet(snippetDeleted)}
-            className="bg-red-800 hover:bg-red-900 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+            className="bg-red-800 hover:bg-red-900 text-white font-bold px-2 rounded focus:outline-none focus:shadow-outline"
           >
             Delete
           </button>

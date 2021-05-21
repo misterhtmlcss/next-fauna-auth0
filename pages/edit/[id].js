@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { getSnippetById } from '../../utils/Fauna';
+
 import SnippetForm from '../../components/SnippetForm';
 
 export default function Home({ snippet }) {
@@ -25,6 +26,7 @@ export const getServerSideProps = withPageAuthRequired({
       const { id } = context.params;
 
       const snippet = await getSnippetById(id);
+      // console.log('snippet', snippet);
 
       return {
         props: {
